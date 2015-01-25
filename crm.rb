@@ -78,22 +78,21 @@ attr_accessor :name
 	def display_one
 		
 		puts "Provide a contact ID: "
-		id_entry = gets.chomp 
-
+		id_entry = gets.chomp.to_i
 		contact = @rolodex.find_contact(id_entry)
-	
-		puts "you want to see #{contact}" 
+		contact 
 	end
 
 	def display_attribute
 		puts "Provide a contact ID: "
 		id_entry = gets.chomp 
-
 		attribute = @rolodex.display_one_attribute(id_entry)
+		puts attribute
 	end
 
 
 	def delete_contact
+
 	end
 
 	# def modify_contact
