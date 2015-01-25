@@ -26,14 +26,18 @@ class Rolodex
 	end
 
 	def display_all_contacts
-		#iterate over the contacts array
-		#print each one.
 		@contacts
 	end
 
 	def display_one_attribute(contact_id)
-
+		@contact.each do |contact| 
+			puts contact.id
+		end
 	end 
 	
+	def delete_one_contact(id)
+		@contacts.delete(id)	
+	end
+
 end
 
