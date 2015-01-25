@@ -5,11 +5,34 @@ class Rolodex
 		@contacts = []
 	end
 
-	def add_contact(contact)
+	def new_contact(contact)
 		contact.id = @@ids
-		#what is happening in contact.id?
 		@contacts << contact
 		@@ids += 1
-		contact 
 	end
+
+	def find_contact(contact_id)
+		@contacts.each do |contact| 
+			if contact_id == contact.id
+				puts contact 
+			end 
+		end
+	end
+
+	def display_one_contact
+		find_contact(id)
+		puts contact 
+	end
+
+	def display_all_contacts
+		#iterate over the contacts array
+		#print each one.
+		@contacts
+	end
+
+	def display_one_attribute(contact_id)
+		
+	end 
+	
 end
+
