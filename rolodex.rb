@@ -1,8 +1,15 @@
 class Rolodex
+
 	@@ids = 1001
 
 	def initialize 
 		@contacts = []
+	end
+
+	def add_random_contacts
+		10.times do
+			new_contact(Contact.fake)
+		end
 	end
 
 	def new_contact(contact)
@@ -15,7 +22,7 @@ class Rolodex
 	def find_contact(contact_id)
 		@contacts.each do |contact| 
 			if contact_id == contact.id
-				puts contact
+				return contact
 			end 
 		end
 	end
@@ -24,36 +31,15 @@ class Rolodex
 		@contacts
 	end
 
-	def display_attribute(contact_id, attribute_entry)
-		@contacts.each do |contact| 
-			if contact_id == contact.id
-				case attribute_entry
-				when 1 then puts contact.first_name
-				when 2 then puts contact.last_name
-				when 3 then puts contact.email
-				when 4 then puts contact.note
-				end 
-			end 
+	def display_attribute(attribute_name)
+		@contacts.map do |contact|
+			contact.send(attribute_name) 
 		end
 	end
 	
 	def delete_one_contact(contact_id)
 		@contacts.delete_if {|contact| contact_id == contact.id}
 	end 
-
-	def modify_attributes(contact_id, attribute_entry, new_attr)
-		@contacts.each do |contact| 
-			if contact_id == contact.id
-				case attribute_entry
-				when 1 then contact.first_name = new_attr
-				when 2 then contact.last_name = new_attr
-				when 3 then contact.email = new_attr
-				when 4 then contact.note = new_attr
-				end 
-			end 
-
-		end
-	end
 
 end
 

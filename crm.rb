@@ -3,11 +3,12 @@ require_relative './contact.rb'
 
 
 class CRM
-attr_accessor :name
+	attr_accessor :name
 
-	def initialize(name)
+	def initialize(name, random_contacts=false)
 		@name = name
 		@rolodex = Rolodex.new
+		@rolodex.add_random_contacts if random_contacts
 	end
 
 	def print_main_menu 
@@ -51,20 +52,18 @@ attr_accessor :name
 		end
 	end
 
+	def prompt(msg)
+		print msg
+		gets.chomp
+	end
+
 	def add_contact
 		puts "\nProvide contact details..."
 
-		print "First name: "
-		first_name = gets.chomp
-	
-		print "Last name: "	
-		last_name = gets.chomp
-	
-		print "Email: "	
-		email = gets.chomp
-		
-		print "Note: "
-		note = gets.chomp
+		first_name = prompt "First name: "
+		last_name  = prompt "Last name: "	
+		email 	   = prompt "Email: "	
+		note 	   = prompt "Note: "
 
 		instance_contact = Contact.new(first_name, last_name, email, note)
 		new_contact = @rolodex.new_contact(instance_contact)
@@ -75,7 +74,6 @@ attr_accessor :name
 	end
 
 	def display_all
-		
 		puts "\nHere are all the contacts in the rolodex:"
 		puts @rolodex.display_all_contacts
 		#call a method on rolodex that prints all contacts
@@ -85,30 +83,58 @@ attr_accessor :name
 		puts "\nProvide a contact ID: "
 		id_entry = gets.chomp.to_i
 		puts "\nYou chose to display:"
-		contact = @rolodex.find_contact(id_entry)
-		contact 
+		puts @rolodex.find_contact(id_entry)
 	end
 
 	def display_attribute
-		puts "\nProvide a contact ID: "
-		id_entry = gets.chomp.to_i
 
-		puts "\nWhich attribute do you want to display?"
-		print_attribute_menu
-		attribute_entry = gets.chomp.to_i
+		# puts "\nWhich attribute do you want to display?"
+		# print_attribute_menu
+		# attribute_entry = gets.chomp.to_i
+		
+		attribute_name = input_attribute_name
 
-		puts "\nDisplaying attribute:"
-		@rolodex.display_attribute(id_entry, attribute_entry)
+		puts "\nDisplaying #{attribute_name} for all contacts:"
+		
+		puts @rolodex.display_attribute(attribute_name)
 		
 	end
 
-	def print_attribute_menu 
-		puts "\n[1] First Name"
-		puts "[2] Last Name"
-		puts "[3] Email"
-		puts "[4] Note"
-		puts "\nEnter a number:"
+	ATTRIBUTE_NAMES = %w[
+		first_name
+		last_name
+		email
+		note
+	]
+
+	def input_attribute_name
+		loop do 
+			puts "\nSelect an attibute:"
+			puts "\n[1] First Name"
+			puts "[2] Last Name"
+			puts "[3] Email"
+			puts "[4] Note"
+			puts "\nEnter a number:"
+
+			attribute_entry = gets.chomp.to_i
+			
+			attribute_name = ATTRIBUTE_NAMES[attribute_entry-1]
+
+			if attribute_name
+				return attribute_name
+			else
+				puts "Incorrect entry. Try again."
+			end
+		end
 	end
+
+	# def print_attribute_menu 
+	# 	puts "\n[1] First Name"
+	# 	puts "[2] Last Name"
+	# 	puts "[3] Email"
+	# 	puts "[4] Note"
+	# 	puts "\nEnter a number:"
+	# end
 
 	def delete_contact
 		puts "\nProvide a contact ID: "
@@ -121,40 +147,25 @@ attr_accessor :name
 		puts "\nProvide a contact ID: "
 		id_entry = gets.chomp.to_i 
 
+		contact = @rolodex.find_contact(id_entry)
+
 		puts "\nYou selected:"
-		
-		@rolodex.find_contact(id_entry)
+		puts contact		
 
-		puts "\nSelect an attibute to modify:"
-		print_attribute_menu
-		attribute_entry = gets.chomp.to_i
+		attribute_name = input_attribute_name
+	
+		puts "Enter a new #{attribute_name}:"
+		new_attr = gets.chomp
 
-		case attribute_entry
-		when 1 then 
-			puts "Enter a new first name:"
-			new_attr = gets.chomp
-		when 2 then 
-			puts "Enter a new last name:"
-			new_attr = gets.chomp
-		when 3 then 
-			puts "Enter a new email:"
-			new_attr = gets.chomp
-		when 4 then 
-			puts "Enter a new note:"
-			new_attr = gets.chomp
-		end
-
-		@rolodex.modify_attributes(id_entry, attribute_entry, new_attr)
+		contact.update_attribute(attribute_name, new_attr)
 
 		puts "\nYour contact has been updated to:"
-
-		@rolodex.find_contact(id_entry)
-
+		puts contact
 	end
 
 end 
 
-bitmaker = CRM.new ("Bitmaker Labs CRM")
+bitmaker = CRM.new("Bitmaker Labs CRM", true)
 bitmaker.main_menu
 
 #puts bitmaker.name
