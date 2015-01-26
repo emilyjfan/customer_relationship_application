@@ -11,17 +11,20 @@ attr_accessor :name
 	end
 
 	def print_main_menu 
-		puts "[1] Add a contact"
+
+		puts "\n[1] Add a contact"
 		puts "[2] Modify a contact"
 		puts "[3] Display all contacts"
 		puts "[4] Display one contact"
 		puts "[5] Display an attribute"
 		puts "[6] Delete a contact"
 		puts "[7] Exit"
-		puts "Enter a number:"
+		puts "\nEnter a number:"
 	end 
 
 	def main_menu
+		puts "\e[H\e[2J"
+
 		puts "Welcome to #{@name}"
 		
 		while true
@@ -49,7 +52,7 @@ attr_accessor :name
 	end
 
 	def add_contact
-		puts "Provide contact details"
+		puts "\nProvide contact details..."
 
 		print "First name: "
 		first_name = gets.chomp
@@ -66,58 +69,63 @@ attr_accessor :name
 		instance_contact = Contact.new(first_name, last_name, email, note)
 		new_contact = @rolodex.new_contact(instance_contact)
 		
+		puts "\nYou successfully added the contact below:"
 		puts new_contact
 
 	end
 
 	def display_all
+		
+		puts "\nHere are all the contacts in the rolodex:"
 		puts @rolodex.display_all_contacts
 		#call a method on rolodex that prints all contacts
 	end
 
 	def display_one
-		puts "Provide a contact ID: "
+		puts "\nProvide a contact ID: "
 		id_entry = gets.chomp.to_i
+		puts "\nYou chose to display:"
 		contact = @rolodex.find_contact(id_entry)
 		contact 
 	end
 
 	def display_attribute
-		puts "Provide a contact ID: "
+		puts "\nProvide a contact ID: "
 		id_entry = gets.chomp.to_i
 
-		puts "Which attribute do you want to display?"
+		puts "\nWhich attribute do you want to display?"
 		print_attribute_menu
 		attribute_entry = gets.chomp.to_i
 
+		puts "\nDisplaying attribute:"
 		@rolodex.display_attribute(id_entry, attribute_entry)
 		
 	end
 
 	def print_attribute_menu 
-		puts "[1] First Name"
+		puts "\n[1] First Name"
 		puts "[2] Last Name"
 		puts "[3] Email"
 		puts "[4] Note"
-		puts "Enter a number:"
+		puts "\nEnter a number:"
 	end
 
 	def delete_contact
-		puts "Provide a contact ID: "
+		puts "\nProvide a contact ID: "
 		id_entry = gets.chomp.to_i
 		@rolodex.delete_one_contact(id_entry)
-		puts "Contact deleted FOREVER!"
+		puts "\nContact #{id_entry} is deleted FOREVER!"
 	end
 
 	def modify_contact
-		puts "Provide a contact ID: "
+		puts "\nProvide a contact ID: "
 		id_entry = gets.chomp.to_i 
 
-		puts "You selected:"
+		puts "\nYou selected:"
 		
 		@rolodex.find_contact(id_entry)
 
-		puts "Select an attibute to modify:"
+		puts "\nSelect an attibute to modify:"
 		print_attribute_menu
 		attribute_entry = gets.chomp.to_i
 
@@ -138,7 +146,7 @@ attr_accessor :name
 
 		@rolodex.modify_attributes(id_entry, attribute_entry, new_attr)
 
-		puts "Your contact has been updated to:"
+		puts "\nYour contact has been updated to:"
 
 		@rolodex.find_contact(id_entry)
 
