@@ -44,9 +44,9 @@ class Rolodex
 		end
 	end
 	
-	def delete_one_contact(id)
-		@contacts.delete(id)	
-	end
+	def delete_one_contact(contact_id)
+		@contacts.delete_if {|contact| contact_id == contact.id}
+	end 
 
 end
 
