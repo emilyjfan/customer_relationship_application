@@ -20,11 +20,6 @@ class Rolodex
 		end
 	end
 
-	# def display_one_contact(id)
-	# 	index = @contacts.index(id)
-	# 	@contacts [index.to_i]
-	# end
-
 	def display_all_contacts
 		@contacts
 	end
@@ -37,8 +32,6 @@ class Rolodex
 				when 2 then puts contact.last_name
 				when 3 then puts contact.email
 				when 4 then puts contact.note
-				else
-					puts "Incorrect option. Try again."
 				end 
 			end 
 		end
@@ -47,6 +40,20 @@ class Rolodex
 	def delete_one_contact(contact_id)
 		@contacts.delete_if {|contact| contact_id == contact.id}
 	end 
+
+	def modify_attributes(contact_id, attribute_entry, new_attr)
+		@contacts.each do |contact| 
+			if contact_id == contact.id
+				case attribute_entry
+				when 1 then contact.first_name = new_attr
+				when 2 then contact.last_name = new_attr
+				when 3 then contact.email = new_attr
+				when 4 then contact.note = new_attr
+				end 
+			end 
+
+		end
+	end
 
 end
 

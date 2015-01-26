@@ -9,7 +9,7 @@ class Contact
 	end
 
 	def to_s 
-		"ID:#{@id.to_i + 1} First Name: #{@first_name} Last Name: #{@last_name} Email: #{@email} Note: #{@note}"
+		"ID:#{@id} First Name: #{@first_name} Last Name: #{@last_name} Email: #{@email} Note: #{@note}"
 	end
 
 end

@@ -99,41 +99,50 @@ attr_accessor :name
 		puts "[2] Last Name"
 		puts "[3] Email"
 		puts "[4] Note"
-		puts "[5] Back to Main menu"
 		puts "Enter a number:"
 	end
 
 	def delete_contact
 		puts "Provide a contact ID: "
 		id_entry = gets.chomp.to_i
-		deleted_contact = @rolodex.delete_one_contact(id_entry)
-		puts "#{deleted_contact} has been deleted."
+		@rolodex.delete_one_contact(id_entry)
+		puts "Contact deleted FOREVER!"
 	end
 
-	# def modify_contact
-	# 	puts "Provide a contact ID: "
-	# 	id_entry = gets.chomp 
+	def modify_contact
+		puts "Provide a contact ID: "
+		id_entry = gets.chomp.to_i 
 
-	# 	puts "Are you sure you want to modify #{id_entry}? Enter 'Y' or 'N'."
-	# 	confirmation = gets.chomp 
-
-	# 	if confirmation == "Y"	
-
-	# 	print "First name: "
-	# 	first_name = gets.chomp
-	
-	# 	print "Last name: "	
-	# 	last_name = gets.chomp
-	
-	# 	print "Email: "	
-	# 	email = gets.chomp
+		puts "You selected:"
 		
-	# 	print "Note: "
-	# 	note = gets.chomp
+		@rolodex.find_contact(id_entry)
 
-	# 	else
-	# 	end
-	# end
+		puts "Select an attibute to modify:"
+		print_attribute_menu
+		attribute_entry = gets.chomp.to_i
+
+		case attribute_entry
+		when 1 then 
+			puts "Enter a new first name:"
+			new_attr = gets.chomp
+		when 2 then 
+			puts "Enter a new last name:"
+			new_attr = gets.chomp
+		when 3 then 
+			puts "Enter a new email:"
+			new_attr = gets.chomp
+		when 4 then 
+			puts "Enter a new note:"
+			new_attr = gets.chomp
+		end
+
+		@rolodex.modify_attributes(id_entry, attribute_entry, new_attr)
+
+		puts "Your contact has been updated to:"
+
+		@rolodex.find_contact(id_entry)
+
+	end
 
 end 
 
