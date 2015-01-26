@@ -44,7 +44,7 @@ attr_accessor :name
 			puts "Goodbye!"
 			return
 		else
-			puts "Incorrection option, try again."	
+			puts "Incorrection option. Try again."	
 		end
 	end
 
@@ -85,10 +85,23 @@ attr_accessor :name
 	def display_attribute
 		puts "Provide a contact ID: "
 		id_entry = gets.chomp.to_i
-		attribute = @rolodex.display_one_attribute(id_entry)
-		attribute
+
+		puts "Which attribute do you want to display?"
+		print_attribute_menu
+		attribute_entry = gets.chomp.to_i
+
+		@rolodex.display_attribute(id_entry, attribute_entry)
+		
 	end
 
+	def print_attribute_menu 
+		puts "[1] First Name"
+		puts "[2] Last Name"
+		puts "[3] Email"
+		puts "[4] Note"
+		puts "[5] Back to Main menu"
+		puts "Enter a number:"
+	end
 
 	def delete_contact
 		puts "Provide a contact ID: "
